@@ -17,22 +17,25 @@
 \usepackage{ifthen} % Adds if else statements
 \usepackage{etoolbox} % Adds better if else statements? Todo
 \usepackage[hidelinks]{hyperref} % Add hyperlinks without changing text or box color
-% \usepackage{tabularx}
+\usepackage[export]{adjustbox}
+\usepackage{graphicx} % For adding images
 \usepackage{geometry} % Adjust page margins
 \geometry{
-	top=0.6in,
-	bottom=0.6in,
-	left=0.75in,
-	right=0.75in,
+    top=0.6in,
+    bottom=0.6in,
+    left=0.75in,
+    right=0.75in,
 }
 
 
 % define constants
-\definecolor{headline}{HTML}{4481be}
+% \definecolor{headline}{HTML}{4481be}
+\definecolor{headline}{HTML}{112e8c}
 \newcommand{\headlinecolor}{\color{headline}}
 \newcommand{\separator}{$|$ }
+\newcommand{\bulletpoint}{\raisebox{0.4ex}{\scalebox{0.6}{$\bullet$}}}
 
-% Change section title appearance TODO
+% Change section title appearance
 \titleformat{\section}{
   \headlinecolor\vspace{-4pt}\scshape\raggedright\large
 }{}{0em}{}[\headlinecolor\titlerule \vspace{-5pt}]
@@ -47,24 +50,24 @@
 \let \@linktwo \relax
 \let \@linkthree \relax
 \newcommand{\link}[2]{ % Set a new variable each time link gets called, until it reaches the 3rd one
-	\@ifundefined{@linkone}{
-		\def \@linkone {\href{#2}{#1}}
-	}{
-		\@ifundefined{@linktwo}{
-			\def \@linktwo {\href{#2}{#1}}
-		}{
-			\def \@linkthree {\href{#2}{#1}}
-		}
-	}
+    \@ifundefined{@linkone}{
+        \def \@linkone {\href{#2}{#1}}
+    }{
+        \@ifundefined{@linktwo}{
+            \def \@linktwo {\href{#2}{#1}}
+        }{
+            \def \@linkthree {\href{#2}{#1}}
+        }
+    }
 }
 
 \newcommand{\printlinks}{ % prints all link variables, that were set
     \@ifundefined{@linkone}{}{\@linkone}
-	\@ifundefined{@linktwo}{}{ \separator \@linktwo}
-	\@ifundefined{@linkthree}{}{ \separator \@linkthree}
+    \@ifundefined{@linktwo}{}{ \separator \@linktwo}
+    \@ifundefined{@linkthree}{}{ \separator \@linkthree}
 }
 
-\renewcommand{\maketitle}{ % redfine maketitle
+\renewcommand{\maketitle}{ % redefine maketitle
     \begin{center}
         \textcolor{headline}{\textbf{\Huge \scshape \name}} \\ \vspace{1pt}
         \small 
@@ -79,50 +82,40 @@
 \newenvironment{cvsection}[1]
 {
     \section{#1}
-    % \begin{itemize}[leftmargin=0.15in, label={}]
     \begin{list}{}{
         \setlength{\leftmargin}{1.5em}
     }
-    \item[]
+        \item[]
 }
 { 
-    % \end{itemize}
     \end{list}
 }
 
-\newenvironment{cvsubsection}[3]{ % 4 parameters: company name, year(s) employed, job title and location
-    % \vspace{-2pt}
+\newenvironment{cvsubsection}[3]{
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
-	\textbf{#1} & #2 \\
-	\ifstrempty{#3}{}{ % ToDO fix empty line, when #3 empty
-	    \textit{\small#3} & \\
-	}%
+        \textbf{#1} & #2 \\
+        \textit{\small#3} & \\
     \end{tabular*}\vspace{-0.5em}
-    % \smallskip % Vertical whitespace
-    \begin{list}{$\cdot$}{} % \cdot used for bullets, no indentation
-	\setlength{\itemsep}{-0.5em} \vspace{-0.5em} % Reduce vertical spacing between items in the list for a tighter look
-    \item[]
+    \begin{list}{\bulletpoint}{}
+        \setlength{\itemsep}{-4pt} \vspace{-0.5em} % Reduce vertical spacing between items
+        \item[]
 }{
-	\end{list}
+    \end{list}
 }
 
 \newenvironment{cvproject}[3]{
-    % \vspace{-2pt}
-    % \smallskip % Vertical whitespace
     \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
-      \small \textbf{#1} $|$ \emph{#2} & #3 \\
-    \end{tabular*}\vspace{-0.5em}
+        \small \textbf{#1} $|$ \emph{#2} & #3 \\
+    \end{tabular*}\vspace{-14pt}
 
-    \begin{list}{$\cdot$}{} % \cdot used for bullets, no indentation
-	\setlength{\itemsep}{-0.5em} \vspace{-0.5em} % Reduce vertical spacing between items in the list for a tighter look
-    \item[]
+    \begin{list}{\bulletpoint}{}
+        \setlength{\itemsep}{-4pt} \vspace{-0.5em} % Reduce vertical spacing between items
+        \item[]
 }{
     \end{list}
 }
 
 \newenvironment{cvskills}{
-    % \vspace{-2pt}
-    % \smallskip % Vertical whitespace
     \begin{tabular*}{0.97\textwidth}{l@{\hskip 1cm}l}
 }{
     \end{tabular*}
@@ -132,10 +125,7 @@
     \textbf{#1} & #2 \\
 }
 
-
-%\setlength{\textwidth}{17.5cm}
-%\setlength{\textheight}{22cm}
 \setcounter{secnumdepth}{0} % remove sections numbering
 \pagenumbering{gobble} % remove page numbering
-\pdfgentounicode=1
+\pdfgentounicode=1 % ensure text is correctly interpreted as unicode
 
