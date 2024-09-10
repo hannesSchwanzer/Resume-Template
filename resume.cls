@@ -15,7 +15,9 @@
 \usepackage{titlesec} % Needed to adjust section title
 \usepackage{xcolor} % Adds colors
 \usepackage{ifthen} % Adds if else statements
+\usepackage{etoolbox} % Adds better if else statements? Todo
 \usepackage[hidelinks]{hyperref} % Add hyperlinks without changing text or box color
+% \usepackage{tabularx}
 \usepackage{geometry} % Adjust page margins
 \geometry{
 	top=0.6in,
@@ -75,13 +77,60 @@
 
 % New sections
 \newenvironment{cvsection}[1]
-    {
-        \section{#1}
+{
+    \section{#1}
+    % \begin{itemize}[leftmargin=0.15in, label={}]
+    \begin{list}{}{
+        \setlength{\leftmargin}{1.5em}
     }
-    { 
-    }
+    \item[]
+}
+{ 
+    % \end{itemize}
+    \end{list}
+}
 
+\newenvironment{cvsubsection}[3]{ % 4 parameters: company name, year(s) employed, job title and location
+    % \vspace{-2pt}
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+	\textbf{#1} & #2 \\
+	\ifstrempty{#3}{}{ % ToDO fix empty line, when #3 empty
+	    \textit{\small#3} & \\
+	}%
+    \end{tabular*}\vspace{-0.5em}
+    % \smallskip % Vertical whitespace
+    \begin{list}{$\cdot$}{} % \cdot used for bullets, no indentation
+	\setlength{\itemsep}{-0.5em} \vspace{-0.5em} % Reduce vertical spacing between items in the list for a tighter look
+    \item[]
+}{
+	\end{list}
+}
 
+\newenvironment{cvproject}[3]{
+    % \vspace{-2pt}
+    % \smallskip % Vertical whitespace
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small \textbf{#1} $|$ \emph{#2} & #3 \\
+    \end{tabular*}\vspace{-0.5em}
+
+    \begin{list}{$\cdot$}{} % \cdot used for bullets, no indentation
+	\setlength{\itemsep}{-0.5em} \vspace{-0.5em} % Reduce vertical spacing between items in the list for a tighter look
+    \item[]
+}{
+    \end{list}
+}
+
+\newenvironment{cvskills}{
+    % \vspace{-2pt}
+    % \smallskip % Vertical whitespace
+    \begin{tabular*}{0.97\textwidth}{l@{\hskip 1cm}l}
+}{
+    \end{tabular*}
+}
+
+\newcommand{\cvskill}[2]{
+    \textbf{#1} & #2 \\
+}
 
 
 %\setlength{\textwidth}{17.5cm}
