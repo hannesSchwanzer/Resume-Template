@@ -27,18 +27,13 @@
     right=0.75in,
 }
 
-
-% define constants
-% \definecolor{headline}{HTML}{4481be}
-\definecolor{headline}{HTML}{112e8c}
-\newcommand{\headlinecolor}{\color{headline}}
-\newcommand{\separator}{$|$ }
-\newcommand{\bulletpoint}{\raisebox{0.4ex}{\scalebox{0.6}{$\bullet$}}}
+% Import Variables and Colors
+\usepackage{sharedvariables}
 
 % Change section title appearance
 \titleformat{\section}{
-  \headlinecolor\vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\headlinecolor\titlerule \vspace{-5pt}]
+  \maincolor\vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\maincolor\titlerule \vspace{-5pt}]
 
 
 % Make Title
@@ -69,7 +64,7 @@
 
 \renewcommand{\maketitle}{ % redefine maketitle
     \begin{center}
-        \textcolor{headline}{\textbf{\Huge \scshape \name}} \\ \vspace{1pt}
+        \textcolor{maincolor}{\textbf{\Huge \scshape \name}} \\ \vspace{1pt}
         \small 
         \address \\
         \contact \\
